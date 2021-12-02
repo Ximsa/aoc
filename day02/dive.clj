@@ -18,7 +18,6 @@
 (defn dive_2 [data]
   (apply * (take 2 (reduce
             (fn [[x y aim] [direction steps]]
-             ;; (println x y )
               (case direction
                 "up" [x y (- aim steps)]
                 "down" [x y (+ aim steps)]

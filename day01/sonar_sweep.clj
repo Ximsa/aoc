@@ -5,9 +5,9 @@
 
 (defn sonar_sweep [sonar_data]
   (reduce (fn [acc strength]
-            {:sum (+ (:sum acc) (if (> strength (:last acc)) 1 0))
-             :last strength})
-          {:sum 0 :last Integer/MAX_VALUE}
+            {:sum (+ (:sum acc) (if (> strength (:prev acc)) 1 0))
+             :prev strength})
+          {:sum 0 :prev Integer/MAX_VALUE}
           sonar_data))
 
 (defn sonar_sweep_1 [file_name]

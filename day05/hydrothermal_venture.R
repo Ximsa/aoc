@@ -1,3 +1,5 @@
+library(pheatmap)
+
 content <- read.table(text = gsub("->", ",", readLines("input")), sep=",", col.names = c("x1","y1","x2","y2"))
 
 field <- matrix(0
@@ -18,3 +20,5 @@ draw_lines <- function(row){
 invisible(apply(content, 1, draw_lines))
 
 print(length(field[field >= 2]))
+
+pheatmap(field, cluster_rows = FALSE, cluster_cols = FALSE, filename="hydrothermal_venture.pdf")

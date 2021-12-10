@@ -21,13 +21,13 @@
    0
    (map score brackets)))
 
-(defn check_line [default_action line]
+(defn check_line [action line]
   (reduce (fn [acc bracket]
             (if (some (partial = bracket) [\{ \( \[ \<])
               (cons bracket acc) ;; push opening parens to stack
               (if (matches (first acc) bracket)
                 (drop 1 acc) ;; pop stack if parens match
-                (reduced (default_action bracket))))) ;; else return score
+                (reduced (action bracket))))) ;; else return score
           '()
           line))
 

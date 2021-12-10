@@ -23,7 +23,7 @@
 
 (defn check_line [default_action line]
   (reduce (fn [acc bracket]
-            (if (some (partial = (int bracket)) (map int [\{ \( \[ \<]))
+            (if (some (partial = bracket) [\{ \( \[ \<])
               (cons bracket acc) ;; push opening parens to stack
               (if (matches (first acc) bracket)
                 (drop 1 acc) ;; pop stack if parens match

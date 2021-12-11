@@ -12,13 +12,13 @@ int flash_counter = 0;
 void tick(size_t x, size_t y){
   if (!(x < 0 || x >= WIDTH ||
         y < 0 || y >= HEIGHT ||
-        flashed[y][x])){
-    dumbos[y][x]++; // not exploded (yet) - increment
-    if(dumbos[y][x] > '9'){ // need to explode?
+        flashed[y][x])){ // within bounds and not flashed yet?
+    dumbos[y][x]++; // increment
+    if(dumbos[y][x] > '9'){ // need to flash?
       flash_counter++;
       flashed[y][x] = 1;
       dumbos[y][x] = '0';
-      tick(x-1,y-1);
+      tick(x-1,y-1); // recursive call to neighbour cells
       tick(x-1,y+0);
       tick(x-1,y+1);
       tick(x+0,y-1);

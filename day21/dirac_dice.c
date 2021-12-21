@@ -12,9 +12,9 @@ int_fast8_t rolls [][2] =
     {1,9},
   };
 
-void dice(int_fast8_t pos_1, int_fast16_t score_1, int_fast64_t * win_1,
-	  int_fast8_t pos_2, int_fast16_t score_2, int_fast64_t * win_2,
-	  int_fast16_t score_mult)
+void dice(int_fast8_t pos_1, int_fast8_t score_1, int_fast64_t * win_1,
+	  int_fast8_t pos_2, int_fast8_t score_2, int_fast64_t * win_2,
+	  int_fast8_t score_mult)
 {
   if(score_2 >= 21)
     {

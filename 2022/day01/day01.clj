@@ -8,8 +8,9 @@
        (split-lines)
        (partition-by (partial = ""))
        (filter (partial not= [""]))
-       (map (partial map #(Integer/parseInt %1)))
-       (map (partial apply +))))
+       (map (comp
+             (partial apply +)
+             (partial map #(Integer/parseInt %1))))))
 
 (apply max (parse "input")) ;; 1
 

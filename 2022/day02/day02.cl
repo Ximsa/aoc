@@ -6,19 +6,20 @@
 
 (defun rps-turn-1 (opponent self)
   "returns the score earned from rps round"
-  (case opponent
-    (1 (case self
-	 (1 (+ self 3))
-	 (2 (+ self 6))
-	 (3 self)))
-    (2 (case self
-	 (1 self)
-	 (2 (+ self 3))
-	 (3 (+ self 6))))
-    (3 (case self
-	 (1 (+ self 6))
-	 (2 self)
-	 (3 (+ self 3))))))
+  (+ self
+     (case opponent
+       (1 (case self
+	    (1 3)
+	    (2 6)
+	    (3 0)))
+       (2 (case self
+	    (1 0)
+	    (2 3)
+	    (3 6)))
+       (3 (case self
+	    (1 6)
+	    (2 0)
+	    (3 3))))))
 
 (defun rps-turn-2 (opponent result)
   "returns the score earned from rps round"
@@ -34,9 +35,8 @@
 	    (2 3)
 	    (3 1))))))
 
-(let    
-    ((content (get-file-content "input"))
-     (sum 0))
+(let ((content (get-file-content "input"))
+      (sum 0))
   (loop when (zerop (length content)) return sum do
     (let
 	((opponent (case (char content 0)
@@ -48,4 +48,4 @@
 		 (#\Y 2)
 		 (#\Z 3))))
       (setq sum (+ sum (rps-turn-2 opponent self)))
-      (setq content (subseq content 4))))))
+      (setq content (subseq content 4)))))

@@ -1,41 +1,16 @@
 
-(fn string-to-chars [str]
-  "returns the string as array of 'chars'"
-  (let [chars {}]
-    (for [index 1 (length str)]
-      (table.insert chars (string.sub str index index)))
-    chars))
-
-
-(fn intersection [str1  ...]
-  "calculates the intersection of n strings"
+(fn intersection [str1 ...]
+  "calculates the instersection of n strings"
   (local str2 (if (> (length [...]) 1) ;; recursive call if multiple args
                   (intersection ...)
                   ...))
-  (let [xs (do ;; can't treat strings like tables, convert
-             (var array (string-to-chars str1))
-             (table.sort array)
-             array)
-        ys (do
-             (var array (string-to-chars str2))
-             (table.sort array)
-             array)
-        zs {}]
-    (var xi 1)
-    (var yi 1)
-    (while (and (<= xi (length xs)) (<= yi (length ys)))
-      (let [x (. xs xi)
-            y (. ys yi)]
-        (if (= x y)
-            (do (table.insert zs x) ;; same, increase both indices
-                (set xi (+ xi 1))
-                (set yi (+ yi 1)))
-            (if (< x y) ;; different, increase only one index
-                (set xi (+ xi 1))
-                (set yi (+ yi 1))))))
-    (accumulate [result "" ;; convert arrays back to strings
-                 _ char (pairs zs)]
-      (.. result char))))
+  (var result "")
+  (for [index 1 (length str1)]
+    (let [char (string.sub str1 index index)]
+      (when (string.find str2 char)
+        (set result (.. result char)))))
+  result)
+          
 
 (fn get-item-priority [item]
   "returns the priority of a given item"

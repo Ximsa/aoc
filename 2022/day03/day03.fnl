@@ -1,15 +1,15 @@
 
 (fn intersection [str1 ...]
   "calculates the instersection of n strings"
-  (local str2 (if (> (length [...]) 1) ;; recursive call if multiple args
+  (let [str2 (if (> (length [...]) 1) ;; recursive call if multiple args
                   (intersection ...)
-                  ...))
-  (-> (fcollect [index 1 (length str1)]
-        (let [char (string.sub str1 index index)]
-          (if (string.find str2 char)
-              char
-              "")))
-      table.concat))
+                  ...)]
+    (-> (fcollect [index 1 (length str1)]
+          (let [char (string.sub str1 index index)]
+            (if (string.find str2 char)
+                char
+                "")))
+        table.concat)))
           
 
 (fn get-item-priority [item]

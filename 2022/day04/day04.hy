@@ -3,16 +3,13 @@
 
 (defn parse [file-name]
   "returns a list of bounds"
-  (list
-    (let [lines (-> file-name ;; split file into lines
+  (let [lines (-> file-name ;; split file into lines
                   (open "r")
                   .read
                   .split)]
-      (map (fn [line] ;; parse each line to [left-1 right-1 left-2 right-2]
-           (list (map int (re.split "[-,]" line))))
-         lines))))
-    
-(setv contents (parse "input"))
+    (list (map (fn [line] ;; parse each line to [left-1 right-1 left-2 right-2]
+                 (list (map int (re.split "[-,]" line))))
+               lines))))
 
 (defn part-1 [xs]
   "checks if one range is fully contained within another"
@@ -28,4 +25,4 @@
         intersection (set.intersection range-1 range-2)]
     (!= 0 (len intersection))))
 
-(sum (map part-2 contents))
+(sum (map part-2 (parse "input")))

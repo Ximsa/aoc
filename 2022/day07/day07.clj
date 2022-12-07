@@ -1,9 +1,9 @@
-(use '[clojure.string :only [split-lines]])
+(use '[clojure.string :only [split-lines split]])
 
 (defn update-fs
   "updates the filesystem with given command"
   [file-system command]
-  (let [[x y z] (str/split command #" ")]
+  (let [[x y z] (split command #" ")]
     (case [x y]
       ["$" "cd"] (if (= z "..") ;; change path
                    (update file-system :path rest) ;; go back 
@@ -32,10 +32,17 @@
   (map (fn [[key value]]
          (if (= key :file-size)
            value
-           (dir-size (file-system key))))
+           (dir-sizes (file-system key))))
        file-system))
 
-(def sizes (filter (comp not zero?) (map (comp (partial apply +) flatten) (tree-seq seq? identity (dir-sizes ((parse "input") "/")))))) ;; it works, don't ask
+(def sizes
+  (->> "input"
+      parse
+      (#(get %1 "/"))
+      dir-sizes
+      (tree-seq seq? identity)
+      (map (comp (partial apply +) flatten))
+      (filter (comp not zero?))))
 
 ;; part-1
 (->> sizes
@@ -45,7 +52,6 @@
 (let [total (apply max sizes)
       unused (- 70000000 total)
       requirement (- 30000000 unused)]
-  (println total unused requirement)
   (->> sizes
        (filter (partial < requirement))
        (apply min)))

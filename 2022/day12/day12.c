@@ -31,7 +31,7 @@ int empty(){
   return bfs_queue.front==bfs_queue.rear;}
 
 int compare_heights(int a, int b){
-  return b <= 1 + a;} // reverse a and b for part 2
+  return b <= 1 + a;}
 
 int get_adjacent_tiles(Point position, Point* neighbours){
   int index = 0;

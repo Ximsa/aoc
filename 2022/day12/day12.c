@@ -86,8 +86,7 @@ int main(){
       if(heightmap[y][x] == 'S'){
 	heightmap[y][x] = 'a';
 	start.x = x;
-	start.y = y;
-      }
+	start.y = y;}
       if(heightmap[y][x] == 'E'){
 	heightmap[y][x] = 'z';
 	target.x = x;

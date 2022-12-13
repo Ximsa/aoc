@@ -6,8 +6,8 @@
 #define HEIGHT 41
 #define QUEUE_SIZE (HEIGHT*WIDTH) // 50 is enough, but to be save for a degenerated case....
 
-char heightmap[HEIGHT][WIDTH] = {0};
-int visited[HEIGHT][WIDTH] = {0};
+char heightmap [HEIGHT][WIDTH] = {0};
+int visited [HEIGHT][WIDTH] = {0};
 
 typedef struct {
   int x,y,distance;
@@ -18,18 +18,17 @@ struct {
   int front;
   int rear;} bfs_queue;
 
-void enqueue(Point p)
-{
+void enqueue(Point p){
   bfs_queue.points[bfs_queue.front] = p;
-  bfs_queue.front = (bfs_queue.front + 1) % QUEUE_SIZE;
-}
-Point dequeue()
-{
+  bfs_queue.front = (bfs_queue.front + 1) % QUEUE_SIZE;}
+
+Point dequeue(){
   Point ret = bfs_queue.points[bfs_queue.rear];
   bfs_queue.rear = (bfs_queue.rear + 1) % QUEUE_SIZE;
-  return ret;
-}
-int empty(){return bfs_queue.front==bfs_queue.rear;}
+  return ret;}
+
+int empty(){
+  return bfs_queue.front==bfs_queue.rear;}
 
 int compare_heights(int a, int b){
   return b <= 1 + a;} // reverse a and b for part 2
@@ -58,8 +57,7 @@ int get_adjacent_tiles(Point position, Point* neighbours){
   return index;}
 
 int found_lowest=0;
-void bfs(Point start, Point target)
-{
+void bfs(Point start, Point target){
   visited[start.y][start.x] = 1;
   enqueue(start);
   while(!empty()){
@@ -95,5 +93,4 @@ int main(){
 	target.x = x;
 	target.y = y;}}
   // perform bfs search
-  bfs(target, start);
-}
+  bfs(target, start);}

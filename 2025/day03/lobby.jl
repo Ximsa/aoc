@@ -1,23 +1,30 @@
 content = read("input.txt", String)
-demo_content ="""987654321111111
-811111111111119
-234234234234278
-818181911112111"""
+#content ="""987654321111111
+#811111111111119
+#234234234234278
+#818181911112111"""
 
-
-
-
-id_ranges_raw = split(content, ",")
-ids = collect(Iterators.flatten(map(function(x)
-                                        lower, upper = split(x,'-')
-                                        return collect(range(parse(Int64,lower),parse(Int64,upper)))
-                                    end, id_ranges_raw)))
-
-
-function is_invalid(id)
-    id_str = repr(id)
-    splitpoint = div(length(id_str),2)
-    return length(id_str) % 2 == 0 && id_str[1:splitpoint] == id_str[splitpoint+1:end]
+function part_1(bank)
+    first_digit, index = findmax(bank[1:end-1])
+    second_digit = maximum(bank[index+1:end])
+    return first_digit * second_digit
 end
 
-result = sum(filter(is_invalid, ids))
+function part_2(bank)
+    digits = collect("000000000000")
+    index = 0
+    for i in 1:11
+        digits[i], next_index = findmax(bank[index+1:end-12+i])
+        index = index+next_index
+    end
+    digits[12] = maximum(bank[index+1:end])
+    return String(digits)
+end
+
+
+
+result = (content
+          |> split
+          .|> collect
+          .|> part_2
+          .|> x -> parse(Int64,x))|> sum
